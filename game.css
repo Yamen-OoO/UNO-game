@@ -4,7 +4,7 @@
     background-color: brown;
     width: 100%;
     height: 100vh;
-    /* background-image: url(/imgs/backgroundimgs/1.avif); */
+    background-image: url(/imgs/backgroundimgs/1.avif);
     background-position: center;
     background-size: cover;
     background-repeat: no-repeat;
@@ -72,6 +72,30 @@
 
 .player-three .unocards-container {
     top: -200px;
+}
+.player-base .alert-sign{
+    width: 50px;
+    height: 50px;
+    border: 2px solid white;
+    background-color: red;
+    position: absolute;
+    display: none;
+}
+.player-one .alert-sign{
+    bottom: 160px;
+    left: 50%;
+}
+.player-tow .alert-sign{
+    bottom: 160px;
+    left: 50%;
+}
+.player-three .alert-sign{
+    top: 160px;
+    left: 50%;
+}
+.player-four .alert-sign{
+    bottom: 160px;
+    left: 50%;
 }
 
 /* !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!! */
@@ -162,11 +186,26 @@
     margin-bottom: 10px;
 }
 .player-profile h3{
-    background-color: red;
+    background-color: black;
     margin-top: 4px;
+    padding: 5px 0;
     font-family: Arial, Helvetica, sans-serif;
     font-size: 15px;
     font-weight: bold;
+}
+.player-profile .cards-number{
+    max-width: 24px;
+    padding: 5px 0;
+    width: 100%;
+    position: absolute;
+    right: 0px;
+    top: 0px;
+    color: white;
+    font-weight: bold;
+    background-color: green;
+    border: 2px solid white;
+    z-index: 11;
+    transition: .4s linear;
 }
 .playerone-profile {
     right: -140px;
@@ -367,7 +406,7 @@
 .choose-color-layer{
     width: 100vw;
     height: 100vh;
-    background-color: rgba(0, 0, 0, 0.353);
+    background-color: rgba(0, 0, 0, 0.764);
     position: absolute;
     top: 0;
     display: flex;
@@ -375,37 +414,39 @@
     justify-content: center;
     align-items: center;
     display: none;
+    gap: 30px;
 
 }
 .Choose-color{
     width: 400px;
     height: 400px;
     border: 50%;
-    border: 10px solid white;
+    /* border: 10px solid white; */
     display: grid;
     grid-template-columns: 50% 50%;
     grid-template-rows: 50% 50%;
     z-index: 1111;
+    gap: 20px;
 }
 .color{
-    border: 1px solid white;
+    border: 10px solid white;
     cursor: pointer;
     transition: .4s ease;
 }
 .red{
-    background-color: red;
+    background-color: #EE1B21;
 }
 .yellow{
-    background-color: yellow;
+    background-color: #FED913;
 }
 .green{
-    background-color: green;
+    background-color: #186C34;
 }
 .blue{
-    background-color: blue;
+    background-color: #035F8A;
 }
 .choose-color-layer h1{
-    font-size: 5rem;
+    font-size: 4rem;
     color: white;
     font-family: Arial, Helvetica, sans-serif;
 }

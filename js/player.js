@@ -2,6 +2,7 @@ import { hidePlayerCards, showPlayerCards } from "./amimations.js"
 import { generatePlayerProfile } from "./profile.js"
 import { GoDownAnimation, apendCards, fixLeftMargin, generatePlayerCards } from "./cards.js"
 import { GameCurrentState } from "./game.js"
+import { Speack } from "../playerSpeacking.js"
 export let playersArray = []
 
 let player1CardsContainer = document.querySelector(".player-one .unocards-container")
@@ -27,12 +28,16 @@ class Player {
         this.cardsArray = cardsArray
         this.cardsContainerElement = cardsContainer
         this.index = i
+        this.cardsNumberElement = profileElemet.firstElementChild.nextElementSibling
+        // this.playerSign = profileElemet.nextElementSibling
     }
 
     //!=========== Main function =============
     async play() {
+        // console.log(this.playerSign)
         await this.active()
         // this.thinkingTime = Math.floor( Math.random() * 5 + 3)
+        // Speack('Blocker')
         await this.think()
         this.endPlaying = true
         await this.disActive()
@@ -48,8 +53,11 @@ class Player {
             setTimeout(() => {
                 if (this.aleratedUno === true) {
                     this.cardsContainerElement.style.backgroundColor = 'gold'
+                    this.cardsNumberElement.style.backgroundColor = 'gold'
                 } else {
                     this.cardsContainerElement.style.backgroundColor = 'blue'
+                    this.cardsNumberElement.style.backgroundColor = 'blue'
+
                 }
                 this.startTimer()
                 res()
@@ -61,14 +69,20 @@ class Player {
             setTimeout(() => {
                 if (this.aleratedUno === true) {
                     this.cardsContainerElement.style.backgroundColor = 'gold'
+                    this.cardsNumberElement.style.backgroundColor = 'gold'
                 } else {
                     this.cardsContainerElement.style.backgroundColor = 'green'
+                    this.cardsNumberElement.style.backgroundColor = 'green'
                 }
                 console.info(this.aleratedUno)
                 res()
             }, 1000);
         })
     }
+
+
+
+
     async think() {
         // await this.computerThinkingTime()
         if (GameCurrentState.Acc !== 0) {
@@ -80,12 +94,14 @@ class Player {
                 let increasingValue = result.increasingValue
                 this.activeAlertUnoFromPlayer()
                 await this.thorwACard(cardIndex)
-                GameCurrentState.IncreaseGCSACC(increasingValue)
+                this.updateCardsNumberElement()
+                await this.checkTheCardEffect()
                 console.log('the New ACC is ', GameCurrentState.Acc)
             }
             else {
                 let ACCCCCC = GameCurrentState.Acc
                 await this.addCards(ACCCCCC)
+                this.updateCardsNumberElement()
                 this.activeAlertUnoFromPlayer()
                 GameCurrentState.ResetGCSACC()
                 //! stop the player to play 
@@ -101,17 +117,20 @@ class Player {
                 console.log('have a card')
                 this.activeAlertUnoFromPlayer()
                 await this.thorwACard(choosenCardIndex)
+                this.updateCardsNumberElement()
                 await this.checkTheCardEffect()
             }
             else {
                 console.log('dont have a card add a new one')
                 await this.addCards(1)
+                this.updateCardsNumberElement()
                 this.activeAlertUnoFromPlayer()
                 let choosenCardIndex = this.checkForAvailbeCards()
                 console.log(choosenCardIndex)
                 if (choosenCardIndex !== false) {
                     this.activeAlertUnoFromPlayer()
                     await this.thorwACard(choosenCardIndex)
+                    this.updateCardsNumberElement()
                     await this.checkTheCardEffect()
                 }
                 else {
@@ -221,9 +240,14 @@ class Player {
         await GameCurrentState.ThorwCardAnimation(cardImage)
         GameCurrentState.UpdateGCSCard(card)
     }
+
+
     removeCardFromArray(cardindex) {
         this.cardsArray.splice(cardindex, 1)
     }
+
+
+
     activeAlertUnoFromPlayer() {
         if (this.cardsArray.length === 3 && this.aleratedUno === false) {
             console.log(this.cardsArray.length, 'cards leftttttttttttttttttttttttttttttttttttttt before thrwing')
@@ -231,11 +255,13 @@ class Player {
             console.log('unoooooooooooooooooooooooooooooooooooooooooooooooo')
             this.cardsContainerElement.classList.add('wining-base-shadow')
             this.cardsContainerElement.style.backgroundColor = 'gold'
+            this.cardsNumberElement.style.backgroundColor = 'gold'
             //! audio in here to say unoooo
             //! change base color to gold
             //! add moving shadow
         } else if (this.cardsArray.length < 3 && this.aleratedUno === true) {
             this.cardsContainerElement.style.backgroundColor = 'gold'
+            this.cardsNumberElement.style.backgroundColor = 'gold'
         }
         else if (this.cardsArray.length > 2 && this.aleratedUno === true) {
             console.log(this.cardsArray.length, 'cards leftttttttttttttttttttttttttttt')
@@ -246,6 +272,10 @@ class Player {
             //! remove moving shadow
         }
     }
+    updateCardsNumberElement() {
+        this.cardsNumberElement.textContent = this.cardsArray.length
+    }
+
 
 
 

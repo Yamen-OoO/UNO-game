@@ -65,8 +65,8 @@ export function generatePlayerCards(cardContainerIndex) {
             }
             else {
                 card.classList.add("computercard")
-                card.style.backgroundImage = `url(${cardsArray[i].image})`
-                // card.style.backgroundImage = 'url("/imgs/unocards/_-min.jpeg")'
+                // card.style.backgroundImage = `url(${cardsArray[i].image})`
+                card.style.backgroundImage = 'url("/imgs/unocards/_-min.jpeg")'
             }
             playersUnoContainers[cardContainerIndex].appendChild(card)
         }
@@ -174,8 +174,8 @@ function generateNewCardElement(cardImg, cardContainerIndex) {
     }
     else {
         card.classList.add("computercard")
-        card.style.backgroundImage = `url(${cardImg})`
-        // card.style.backgroundImage = 'url("/imgs/unocards/_-min.jpeg")'
+        // card.style.backgroundImage = `url(${cardImg})`
+        card.style.backgroundImage = 'url("/imgs/unocards/_-min.jpeg")'
     }
 
 

@@ -257,7 +257,7 @@ export let GameCurrentState = {
 
             //// ! if computer
             if (playerIndex !== 10) {
-                let choosenColor = 'yellow'
+                let choosenColor = 'blue'
                 this.setChoosenColor(choosenColor , typeee)
 
                 setTimeout(() => {
