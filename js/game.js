@@ -4,11 +4,16 @@ import { settings } from "./index.js";
 import { ClearPlayerArrayAndCardsElementsAndProfilesResetElements, generatePlayers, playersArray, showPlayerCardsAnimation } from "./player.js";
 
 
-let endGameButton = document.querySelector(".game-page button#end")
-endGameButton.addEventListener('click', () => {
-    ClearGameToEndIt()
-    changeGameState()
-    // settings = {}
+let endGameButtons = document.querySelectorAll(".game-page button.end")
+let resultPlacholder = document.querySelector(".result-placeholer")
+
+endGameButtons.forEach(button =>{
+    button.addEventListener('click', () => {
+        ClearGameToEndIt()
+        changeGameState()
+        // settings = {}
+        resultPlacholder.style.display = 'none'
+    })
 })
 
 
@@ -32,46 +37,54 @@ export async function runGame() {
     // console.log(playersArray)
 
     //!3) checkwhoseTurn() that call it self until a win scenrio
-    checkWhoseTurn()
+    await GameRunning()
 
-
+    showGameResult()
     //! 4) when i retunred to here from wining sernario ,,,, use  ClearGameToEndIt() show the result  await to click changeGameState()
 
-
 }
 
+function GameRunning() {
+    return new Promise(res => {
+        checkWhoseTurn(res)
 
-function checkWhoseTurn() {
-    // if (GameCurrentState.playerTurn === 0) { 
-    //     playersArray[GameCurrentState.playerTurn].play()
-    //     .finally(() => {
-    //         GameCurrentState.UpdateGCSPlayerTurn()
-    //         checkWhoseTurn()
-    //     })
-    // }
-    // else {
+    })
 
+    function checkWhoseTurn(res) {
+        console.log('%c now it is player ', 'color:blue', GameCurrentState.playerTurn)
+        if (playersArray.length === 0) return //^ when i exit the game 
 
 
+        playersArray[GameCurrentState.playerTurn].play()
+            .catch(err => console.log(err))
+            .then(() => {
+                console.log('%c Player is done', 'color:yellow')
+                //! check wining senario ...then return
+                chekckPlayerStateWining()
+                if (GameCurrentState.endGame === true) {
+                    res()
+                }
+                else {
+                    GameCurrentState.UpdateGCSPlayerTurn()
+                    checkWhoseTurn(res)
+                }
+            })
+            .catch((error) => console.log(error))
+    }
 
-    console.log('%c now it is player ', 'color:blue', GameCurrentState.playerTurn)
-    if (playersArray.length === 0) return //^ when i exit the game 
 
 
-    playersArray[GameCurrentState.playerTurn].play()
-        .catch((error) => console.log(error))
-        .finally(() => {
-            console.log('%c Player is done', 'color:yellow')
-            GameCurrentState.UpdateGCSPlayerTurn()
-            //! check wining senario ...then return
-            checkWhoseTurn()
-        })
-    // }
-
+    function chekckPlayerStateWining() {
+        //~ check if player cards length === 0 end the game
+        if (playersArray[GameCurrentState.playerTurn].cardsArray.length === 0) {
+            GameCurrentState.endGame = true
+        }
+        console.log('check the error test' , GameCurrentState.endGame)
+    }
 }
-
-
-
+function showGameResult() {
+    resultPlacholder.style.display = 'block'
+}
 
 
 
@@ -168,6 +181,7 @@ export let GameCurrentState = {
         this.Acc = 0
     },
     GenerateGCSNewProperites: function () {
+        this.endGame = false
         this.CurrentCardElement = document.querySelector(".cards-field-container .current-card")
         this.bankCardTop = document.querySelector(".cards-field-container .bank-card-top")
         this.mode = settings.mode
@@ -178,7 +192,7 @@ export let GameCurrentState = {
         let color = ['red', 'blue', 'green', 'yellow'][Math.floor(Math.random() * 3)]
         let value = Math.floor(Math.random() * 9)
 
-        this.CurrentCard = { color: color, value: value.toString(), image: `/imgs/unocards/${color}${value}-min.jpg` }
+        this.CurrentCard = { color: color, value: value, image: `/imgs/unocards/${color}${value}-min.jpg` }
         // this.CurrentCard = { color: 'red', value: 'P2'.toString(), image: `/imgs/unocards/redP2-min.jpg` }
         // this.CurrentCard = { color: 'black', value: 'P4'.toString(), image: `/imgs/unocards/P4-min.jpg` }
         this.CurrentCardElement.style.backgroundImage = `url(${this.CurrentCard.image})`
@@ -258,7 +272,7 @@ export let GameCurrentState = {
             //// ! if computer
             if (playerIndex !== 10) {
                 let choosenColor = 'blue'
-                this.setChoosenColor(choosenColor , typeee)
+                this.setChoosenColor(choosenColor, typeee)
 
                 setTimeout(() => {
                     console.log('choossssssssssssssssseeeeeeeeeeennnnnnnnnnn color is reeddddd')
@@ -271,13 +285,13 @@ export let GameCurrentState = {
         })
 
     },
-    setChoosenColor(CC , typeee) {
+    setChoosenColor(CC, typeee) {
         // this.colorsPlaceholder.forEach(color => console.log(color))
         this.colorsPlaceholder.forEach(color => {
-            if (color.getAttribute('data-color') === CC){
-                let color1 = CC 
+            if (color.getAttribute('data-color') === CC) {
+                let color1 = CC
                 let value1 = typeee
-                let newCard = { color: CC , value: value1, image: `/imgs/unocards/${color1}${value1}-min.jpg` }
+                let newCard = { color: CC, value: value1, image: `/imgs/unocards/${color1}${value1}-min.jpg` }
                 console.log(color1)
                 console.log(value1)
                 console.log(newCard)

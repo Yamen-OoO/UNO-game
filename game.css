@@ -1,10 +1,10 @@
 .game-page {
     display: none;
     position: relative;
-    background-color: brown;
+    background-color: rgb(149, 175, 221);
     width: 100%;
     height: 100vh;
-    background-image: url(/imgs/backgroundimgs/1.avif);
+    /* background-image: url(/imgs/backgroundimgs/1.avif); */
     background-position: center;
     background-size: cover;
     background-repeat: no-repeat;
@@ -19,9 +19,9 @@
     width: 100%;
     height: 30px;
     /* border: 1px solid black; */
-    background-color: rgba(252, 0, 0, 0.916);
+    background-color: green;
     /* border: 2px solid white; */
-    /* border-bottom: none; */
+    border-bottom: none;
 }
 
 .player-one {
@@ -44,8 +44,8 @@
     top: 0;
     left: 75%;
     transform: translateX(-50%);
-    /* border-bottom: 2px solid white; */
-    /* border-top: none; */
+    border-bottom: 2px solid white;
+    border-top: none;
 }
 
 .player-four {
@@ -59,14 +59,14 @@
 .unocards-container {
     width: 100%;
     padding: 0 10px;
-    background-color: rgba(55, 255, 0, 0.916);
+    /* background-color: rgba(55, 255, 0, 0.916); */
     height: 100%;
     display: flex;
     justify-content: flex-end;
     flex-wrap: nowrap;
     position: relative;
     bottom: -200px;
-    transition: 0s linear;
+    transition: .4s linear;
 
 }
 
@@ -301,8 +301,17 @@
 .cards-field-container button {
     position: absolute;
     right: 0;
-    padding: 10px;
+    padding: 15px;
     bottom: 0;
+    background-color: black;
+    color: white;
+    /* border: none; */
+    border: 3px solid white;
+    outline: none;
+    font-size: 1.2rem;
+    font-weight: bold;
+    /* text-shadow: -3px 0px 10px red; */
+    cursor: pointer;
 }
 
 
@@ -507,4 +516,18 @@
     }
     
 }
+/* !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!! */
+.result-placeholer{
+    padding: 20px;
+    width: 500px;
+    height: 500px;
+    border: 1px solid black;
+    background-color: white;
+    position: absolute;
+    left: 50%;
+    top: 50%;
+    transform: translate(-50% , -50%);
+    display: none;
+}
+
 

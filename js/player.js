@@ -2,7 +2,7 @@ import { hidePlayerCards, showPlayerCards } from "./amimations.js"
 import { generatePlayerProfile } from "./profile.js"
 import { GoDownAnimation, apendCards, fixLeftMargin, generatePlayerCards } from "./cards.js"
 import { GameCurrentState } from "./game.js"
-import { Speack } from "../playerSpeacking.js"
+import { Speack } from "../audios.js"
 export let playersArray = []
 
 let player1CardsContainer = document.querySelector(".player-one .unocards-container")
@@ -42,6 +42,7 @@ class Player {
         this.endPlaying = true
         await this.disActive()
         this.endPlaying = false
+        console.log('player left cards' , this.cardsArray.length)
     }
 
 
@@ -354,9 +355,12 @@ export function showPlayerCardsAnimation() {
 
 
 export function ClearPlayerArrayAndCardsElementsAndProfilesResetElements() {
-    playersArray.length = 0
     //! clear elements
     for (let i = 0; i <= 3; i++) {
+        playersArray[i].cardsContainerElement.classList.remove("wining-base-shadow")
+        playersArray[i].cardsContainerElement.style.backgroundColor = 'green'
+        playersArray[i].cardsNumberElement.style.backgroundColor = 'green'
+        playersArray[i].cardsNumberElement.textContent = '7'
         playersUnoContainers[i].innerHTML = null
         let container = playersUnoContainers[i]
         if (i === 2) {
@@ -368,4 +372,5 @@ export function ClearPlayerArrayAndCardsElementsAndProfilesResetElements() {
         playersUnoContainers[i].nextElementSibling.firstElementChild.lastElementChild.src = ''
         playersUnoContainers[i].nextElementSibling.lastElementChild.textContent = '__'
     }
+        playersArray.length = 0
 }
