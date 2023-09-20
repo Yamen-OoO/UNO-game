@@ -1,3 +1,4 @@
+import { muteGameAudios, unMuteGameAudios } from "../audios.js";
 import { ThorwAnimation, bankCardAnimation, fadeInPlaceHolder } from "./amimations.js";
 import { changeGameState } from "./index.js";
 import { settings } from "./index.js";
@@ -5,8 +6,12 @@ import { ClearPlayerArrayAndCardsElementsAndProfilesResetElements, generatePlaye
 import { resetNamesArray } from "./profile.js";
 
 
+
 let endGameButtons = document.querySelectorAll(".game-page button.end")
+let AudioButton = document.querySelector(".game-page button.audio")
 let resultPlacholder = document.querySelector(".result-placeholer")
+let gameAudioMute = false
+console.log(AudioButton)
 
 endGameButtons.forEach(button => {
     button.addEventListener('click', () => {
@@ -15,6 +20,18 @@ endGameButtons.forEach(button => {
         // settings = {}
         resultPlacholder.style.display = 'none'
     })
+})
+AudioButton.addEventListener('click', () => {
+    if(gameAudioMute){
+        AudioButton.style.backgroundColor = 'red'
+        muteGameAudios()
+        gameAudioMute =!gameAudioMute
+    }
+    else{
+        AudioButton.style.backgroundColor = 'blue'
+        unMuteGameAudios()
+        gameAudioMute =!gameAudioMute
+    }
 })
 
 
@@ -81,6 +98,18 @@ function GameRunning() {
             GameCurrentState.endGame = true
         }
 
+
+        //!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
+        //!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
+        //!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
+        //!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
+        //!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
+        //!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
+        //!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
+        //!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
+        //!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
+        //!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
+
         //~ if current card is Stop ... 
         if (GameCurrentState.CurrentCard.value === "S") {
             GameCurrentState.UpdateGCSPlayerTurn()
@@ -102,7 +131,7 @@ function showGameResult() {
     GameCurrentState.gameResultList.sort((a, b) => a.cardsNumber - b.cardsNumber)
     console.log(GameCurrentState.gameResultList)
     console.log(GameCurrentState.gameResultListElement)
-    for(let i = 0 ; i< 4 ;i++) {
+    for (let i = 0; i < 4; i++) {
         GameCurrentState.gameResultListElement[i].textContent = GameCurrentState.gameResultList[i].name
     }
 }
@@ -227,7 +256,7 @@ export let GameCurrentState = {
         this.rotation = 'clockWise'
 
         this.gameResultList = []
-        this.gameResultListElement  = resultPlacholder.firstElementChild.nextElementSibling.children
+        this.gameResultListElement = resultPlacholder.firstElementChild.nextElementSibling.children
 
 
         this.colorsPlaceholderLayer = document.querySelector(".choose-color-layer")

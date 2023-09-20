@@ -22,6 +22,7 @@ let audios = {
 }
 
 let speackingObj = new Audio()
+speackingObj.volume = .5
 
 export function Speack(typeee){
     let sayItOrNot = Math.floor(Math.random() * 10)
@@ -43,6 +44,7 @@ window.onload = function(){
 //~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~``
 
 let cardObj = new Audio()
+cardObj.volume = .5
 
 export function cardAudio(movment){
     cardObj.src = `/audio/other/${movment}`
@@ -53,9 +55,22 @@ export function cardAudio(movment){
 
 // ~~```~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~```
 let bakcgroundMusic = new Audio()
+bakcgroundMusic.volume = .5
 
 export function playMusic(page){
     bakcgroundMusic.src = `/audio/music/${page}`
     bakcgroundMusic.play()
     bakcgroundMusic.loop = true
+}
+
+
+export function muteGameAudios(){
+    bakcgroundMusic.volume = 0
+    cardObj.volume = 0
+    speackingObj.volume = 0
+}
+export function unMuteGameAudios(){
+    bakcgroundMusic.volume = .5
+    cardObj.volume = .5
+    speackingObj.volume = .5
 }

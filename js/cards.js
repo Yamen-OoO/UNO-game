@@ -85,10 +85,10 @@ export function fixLeftMargin(cardContainerIndex) {
             leftCardMargin = 30
         }
         else if (cardsNumber.length >= 15) {
-            leftCardMargin = 40
+            leftCardMargin = 35
         }
         else if (cardsNumber.length >= 10) {
-            leftCardMargin = 55
+            leftCardMargin = 45
         }
         else if (cardsNumber.length <= 10) {
             leftCardMargin = 75
@@ -103,10 +103,10 @@ export function fixLeftMargin(cardContainerIndex) {
             leftCardMargin = 18
         }
         else if (cardsNumber.length >= 15) {
-            leftCardMargin = 25
+            leftCardMargin = 20
         }
         else if (cardsNumber.length >= 10) {
-            leftCardMargin = 28
+            leftCardMargin = 25
         }
         else if (cardsNumber.length <= 10) {
             leftCardMargin = 40
