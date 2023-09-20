@@ -14,6 +14,7 @@ let playersUnoContainers = [player1CardsContainer, player2CardsContainer, player
 //* generate profile Object and return it , change profile html element
 export function generatePlayerProfile(containerIndex) {
     let name = names[Math.floor(Math.random() * names.length)]
+    names.splice(names.indexOf(name), 1)
     let profileObject = {
         name: name,
         image: `/imgs/playersimgs/${name}.jpg`
@@ -29,5 +30,7 @@ export function generatePlayerProfile(containerIndex) {
 
 }
 
-
+export function resetNamesArray(){
+    names = ['amman', 'hadi', 'kareem', 'krystal', 'lana', 'majd', 'nazzeh', 'noor', 'samira', 'sima', 'tala', 'tony', 'yamen', 'zina']
+}
 

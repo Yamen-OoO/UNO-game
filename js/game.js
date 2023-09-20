@@ -1,13 +1,14 @@
-import { ThorwAnimation, bankCardAnimation } from "./amimations.js";
+import { ThorwAnimation, bankCardAnimation, fadeInPlaceHolder } from "./amimations.js";
 import { changeGameState } from "./index.js";
 import { settings } from "./index.js";
 import { ClearPlayerArrayAndCardsElementsAndProfilesResetElements, generatePlayers, playersArray, showPlayerCardsAnimation } from "./player.js";
+import { resetNamesArray } from "./profile.js";
 
 
 let endGameButtons = document.querySelectorAll(".game-page button.end")
 let resultPlacholder = document.querySelector(".result-placeholer")
 
-endGameButtons.forEach(button =>{
+endGameButtons.forEach(button => {
     button.addEventListener('click', () => {
         ClearGameToEndIt()
         changeGameState()
@@ -61,7 +62,7 @@ function GameRunning() {
                 console.log('%c Player is done', 'color:yellow')
                 //! check wining senario ...then return
                 chekckPlayerStateWining()
-                if (GameCurrentState.endGame === true) {
+                if (GameCurrentState.endGame === true && playersArray[GameCurrentState.playerTurn].cardsArray.length === 0) {
                     res()
                 }
                 else {
@@ -79,11 +80,31 @@ function GameRunning() {
         if (playersArray[GameCurrentState.playerTurn].cardsArray.length === 0) {
             GameCurrentState.endGame = true
         }
-        console.log('check the error test' , GameCurrentState.endGame)
+
+        //~ if current card is Stop ... 
+        if (GameCurrentState.CurrentCard.value === "S") {
+            GameCurrentState.UpdateGCSPlayerTurn()
+        }
+
+        console.log('check the error test', GameCurrentState.endGame)
     }
 }
 function showGameResult() {
     resultPlacholder.style.display = 'block'
+    fadeInPlaceHolder(resultPlacholder)
+
+    for (let i = 0; i <= 3; i++) {
+        let player = {}
+        player.cardsNumber = playersArray[i].cardsArray.length
+        player.name = playersArray[i].profileObject.name
+        GameCurrentState.gameResultList.push(player)
+    }
+    GameCurrentState.gameResultList.sort((a, b) => a.cardsNumber - b.cardsNumber)
+    console.log(GameCurrentState.gameResultList)
+    console.log(GameCurrentState.gameResultListElement)
+    for(let i = 0 ; i< 4 ;i++) {
+        GameCurrentState.gameResultListElement[i].textContent = GameCurrentState.gameResultList[i].name
+    }
 }
 
 
@@ -200,8 +221,13 @@ export let GameCurrentState = {
         this.thorwedCardElement = document.querySelector(".cards-field-container .thrown-card")
 
         this.rotationElement = document.querySelector(".rotation-arrow")
+        this.rotationElement.classList.add('clockwise')
+        this.rotationElement.classList.remove('counter-clockwise')
         console.log(this.rotationElement)
         this.rotation = 'clockWise'
+
+        this.gameResultList = []
+        this.gameResultListElement  = resultPlacholder.firstElementChild.nextElementSibling.children
 
 
         this.colorsPlaceholderLayer = document.querySelector(".choose-color-layer")
@@ -246,7 +272,7 @@ export let GameCurrentState = {
         })
     },
     clearGCSObject: function () {
-        //^ delete all the properties excpect the property that has function type
+        //^ delete all the properties excpect the property that is a function type
         let properties = Object.keys(this).map(prop => {
             return typeof this[prop] !== 'function' ? delete this[prop] : "ne"
         })
@@ -320,6 +346,7 @@ export let GameCurrentState = {
 
 function HideGameDetails() {
     let placeHolderButton = document.querySelector(".placeholder-details button")
+    fadeInPlaceHolder(placeHolderButton.parentElement)
     return new Promise(res => {
         placeHolderButton.addEventListener("click", function () {
             this.parentElement.parentElement.style.display = 'none'
@@ -333,6 +360,7 @@ function HideGameDetails() {
 function ClearGameToEndIt() {
     ClearPlayerArrayAndCardsElementsAndProfilesResetElements()
     GameCurrentState.clearGCSObject()
+    resetNamesArray()
     console.log('after Ending the game')
     console.log(GameCurrentState)
     console.log(playersArray)

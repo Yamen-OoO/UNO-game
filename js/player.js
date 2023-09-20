@@ -174,20 +174,14 @@ class Player {
         else if (newCardValue === "P4") {
             GameCurrentState.IncreaseGCSACC(4)
             console.log('Acc + 4')
-            // GameCurrentState.CurrentCard.color = 'red'
-            // await this.ShowColorsPlaceholder()
             await GameCurrentState.showColorsPlaceholder('P4', '', this.index)
-
-
-            //change to dynamic color
-            // update colors card img to dynamic color
         }
         else if (newCardValue === "P2") {
             GameCurrentState.IncreaseGCSACC(2)
             console.log('Acc + 2')
         }
         else if (newCardValue === "S") {
-            GameCurrentState.UpdateGCSPlayerTurn()
+            //~ UpdagtePlayerTrun after i check the wining state in chekckPlayerStateWining (game.js)
             console.log('Stop the next player')
         }
         else if (newCardValue === 'colors') {
