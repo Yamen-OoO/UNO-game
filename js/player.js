@@ -32,12 +32,9 @@ class Player {
         // this.playerSign = profileElemet.nextElementSibling
     }
 
-    //!=========== Main function =============
-    async play() {
-        // console.log(this.playerSign)
+    //!=========== Computer Main function =============
+    async computerPlay() {
         await this.active()
-        // this.thinkingTime = Math.floor( Math.random() * 5 + 3)
-        // Speack('Blocker')
         await this.think()
         this.endPlaying = true
         await this.disActive()
@@ -49,7 +46,7 @@ class Player {
 
 
 
-    active() {
+    active(res) {
         return new Promise(res => {
             setTimeout(() => {
                 if (this.aleratedUno === true) {
@@ -60,7 +57,7 @@ class Player {
                     this.cardsNumberElement.style.backgroundColor = 'blue'
 
                 }
-                this.startTimer()
+                this.startTimer(res)
                 res()
             }, 2000);
         })
@@ -80,10 +77,47 @@ class Player {
             }, 1000);
         })
     }
+    async userPlay(res){
+        return new Promise(res =>{
+            this.active(res)
+        })
+        //check ...if Acc = 0 > wait player to play or end the game in 
+    }
 
 
 
 
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+    //^ computer base function
     async think() {
         // await this.computerThinkingTime()
         if (GameCurrentState.Acc !== 0) {
@@ -140,29 +174,20 @@ class Player {
             }
 
         }
-
-
-
-
-
-
-
-
-
-
-
-
-
-
     }
-    computerThinkingTime() {
-        let thinkingTime = 4000
-        return new Promise((resolve, reject) => {
-            setTimeout(() => {
-                resolve()
-            }, thinkingTime);
-        })
-    }
+
+
+
+
+
+    // computerThinkingTime() {
+    //     let thinkingTime = 4000
+    //     return new Promise((resolve, reject) => {
+    //         setTimeout(() => {
+    //             resolve()
+    //         }, thinkingTime);
+    //     })
+    // }
     async checkTheCardEffect() {
 
         let newCardValue = GameCurrentState.CurrentCard.value
@@ -277,7 +302,7 @@ class Player {
 
 
 
-    startTimer() {
+    startTimer(res) {
         let progressBar = this.cardsContainerElement.nextElementSibling.firstElementChild.firstElementChild
         progressBar.style.display = 'block'
         let seconds = 10;
@@ -297,6 +322,33 @@ class Player {
 
     }
 }
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 
 

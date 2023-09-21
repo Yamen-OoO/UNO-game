@@ -4,15 +4,15 @@ import { changeGameState } from "./index.js";
 import { settings } from "./index.js";
 import { ClearPlayerArrayAndCardsElementsAndProfilesResetElements, generatePlayers, playersArray, showPlayerCardsAnimation } from "./player.js";
 import { resetNamesArray } from "./profile.js";
-
-
-
 let endGameButtons = document.querySelectorAll(".game-page button.end")
 let AudioButton = document.querySelector(".game-page button.audio")
 let resultPlacholder = document.querySelector(".result-placeholer")
 let gameAudioMute = false
-console.log(AudioButton)
 
+
+
+
+// * Buttons Actions
 endGameButtons.forEach(button => {
     button.addEventListener('click', () => {
         ClearGameToEndIt()
@@ -22,72 +22,108 @@ endGameButtons.forEach(button => {
     })
 })
 AudioButton.addEventListener('click', () => {
-    if(gameAudioMute){
+    if (gameAudioMute) {
         AudioButton.style.backgroundColor = 'red'
         muteGameAudios()
-        gameAudioMute =!gameAudioMute
+        gameAudioMute = !gameAudioMute
     }
-    else{
+    else {
         AudioButton.style.backgroundColor = 'blue'
         unMuteGameAudios()
-        gameAudioMute =!gameAudioMute
+        gameAudioMute = !gameAudioMute
     }
 })
+//****************************************************************************** */
 
 
+
+//* GamePage Main Fucntion That run every Game
 export async function runGame() {
-    //!0) bases(rec , circle) and bankCard , unobutton , exit button are made be normal html 
-    //!1) generate gcs object depend on settings
+    //^ 0) bases(rec , circle) and bankCard , unobutton , exit button are made with normal html 
+
+    //^ 1) generate gcs object depend on settings
     GameCurrentState.GenerateGCSNewProperites()
-    //! generate players from player.js
+
+    //^ 2) generate players from player.js
     generatePlayers()
+
+
     //! setup the voices files depending on settings.lang
     //! setup the backgroundimg depending on settings.back
 
-    // ! when click ok start the game playing 
+    //^ 4) when click ok start the game playing 
     let clickButton = await HideGameDetails()
 
-    //!2) show the cards animation that are insdie the base > unocards-container
+    //^ 5) cards animation that are insdie the base > unocards-container
     let showPlayerCards = await showPlayerCardsAnimation()
     console.log('all setting are ready now start the game')
 
 
-    // console.log(playersArray)
 
-    //!3) checkwhoseTurn() that call it self until a win scenrio
+    //^ 6) checkwhoseTurn() that call itself until a win or lose senario
     await GameRunning()
 
+    //^ 7) show the result of the game
+    //! when i retunred to here from wining sernario ,,,,and click end button use  ClearGameToEndIt() show the result  await to click changeGameState()
     showGameResult()
-    //! 4) when i retunred to here from wining sernario ,,,, use  ClearGameToEndIt() show the result  await to click changeGameState()
-
 }
+//****************************************************************************** */
 
+
+
+
+//* async function that run players playing (async because we are using timers and animations)
+//* when a player has 0 cards ... we resolve this function then show the result
 function GameRunning() {
     return new Promise(res => {
         checkWhoseTurn(res)
+
 
     })
 
     function checkWhoseTurn(res) {
         console.log('%c now it is player ', 'color:blue', GameCurrentState.playerTurn)
         if (playersArray.length === 0) return //^ when i exit the game 
+        console.log(res)
 
 
-        playersArray[GameCurrentState.playerTurn].play()
-            .catch(err => console.log(err))
-            .then(() => {
-                console.log('%c Player is done', 'color:yellow')
-                //! check wining senario ...then return
-                chekckPlayerStateWining()
-                if (GameCurrentState.endGame === true && playersArray[GameCurrentState.playerTurn].cardsArray.length === 0) {
-                    res()
-                }
-                else {
-                    GameCurrentState.UpdateGCSPlayerTurn()
-                    checkWhoseTurn(res)
-                }
-            })
-            .catch((error) => console.log(error))
+
+        if (GameCurrentState.playerTurn === 0) {
+            playersArray[GameCurrentState.playerTurn].userPlay()
+                .catch(err => console.log(err))
+                .then(() => {
+                    checkToEndTheGame(res)
+
+                })
+                .catch(err => console.log(err))
+        }
+        else {
+            playersArray[GameCurrentState.playerTurn].computerPlay()
+                .catch(err => console.log(err))
+                .then(() => {
+                    checkToEndTheGame(res)
+                })
+                .catch((error) => console.log(error))
+        }
+    }
+
+
+
+    function checkToEndTheGame(res) {
+        console.log('%c Player is done', 'color:yellow')
+        //! check wining senario ...then return
+        chekckPlayerStateWining()
+        if (GameCurrentState.endGame === true && playersArray[GameCurrentState.playerTurn].cardsArray.length === 0) {
+            res()
+        }
+        else {
+            //~ if current card is Stop ... 
+            if (GameCurrentState.CurrentCard.value === "S") {
+                GameCurrentState.UpdateGCSPlayerTurn()
+            }
+            GameCurrentState.UpdateGCSPlayerTurn()
+            checkWhoseTurn(res)
+        }
     }
 
 
@@ -97,27 +133,14 @@ function GameRunning() {
         if (playersArray[GameCurrentState.playerTurn].cardsArray.length === 0) {
             GameCurrentState.endGame = true
         }
-
-
-        //!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
-        //!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
-        //!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
-        //!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
-        //!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
-        //!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
-        //!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
-        //!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
-        //!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
-        //!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
-
-        //~ if current card is Stop ... 
-        if (GameCurrentState.CurrentCard.value === "S") {
-            GameCurrentState.UpdateGCSPlayerTurn()
-        }
-
         console.log('check the error test', GameCurrentState.endGame)
     }
 }
+
+
+
+
+
 function showGameResult() {
     resultPlacholder.style.display = 'block'
     fadeInPlaceHolder(resultPlacholder)
@@ -135,43 +158,6 @@ function showGameResult() {
         GameCurrentState.gameResultListElement[i].textContent = GameCurrentState.gameResultList[i].name
     }
 }
-
-
-
-
-
-//! when exit game .... delete all players from PlayersArray and elements , GCS with no properties
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 
 
 

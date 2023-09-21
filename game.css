@@ -418,7 +418,7 @@
 }
 
 .rotation-arrow.counter-clockwise {
-    animation: counterclockwise 20s linear infinite;
+    animation: counterclockwise 20s linear infinite ;
 }
 
 @keyframes counterclockwise {
@@ -429,7 +429,7 @@
     100% {
         transform: rotate(0deg);
     }
-
+    
 }
 .rotation-arrow.clockwise {
     animation: clockwise 20s linear infinite;
