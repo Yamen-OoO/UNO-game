@@ -111,6 +111,7 @@ function GameRunning() {
 
     function checkToEndTheGame(res) {
         console.log('%c Player is done', 'color:yellow')
+        console.log('user is ', GameCurrentState.playerTurn)
         //! check wining senario ...then return
         chekckPlayerStateWining()
         if (GameCurrentState.endGame === true && playersArray[GameCurrentState.playerTurn].cardsArray.length === 0) {
@@ -122,6 +123,7 @@ function GameRunning() {
                 GameCurrentState.UpdateGCSPlayerTurn()
             }
             GameCurrentState.UpdateGCSPlayerTurn()
+            console.log('Now it is ', GameCurrentState.playerTurn)
             checkWhoseTurn(res)
         }
     }
@@ -228,7 +230,7 @@ export let GameCurrentState = {
         let color = ['red', 'blue', 'green', 'yellow'][Math.floor(Math.random() * 3)]
         let value = Math.floor(Math.random() * 9)
 
-        this.CurrentCard = { color: color, value: value, image: `/imgs/unocards/${color}${value}-min.jpg` }
+        this.CurrentCard = { color: 'blue', value: value, image: `/imgs/unocards/blue${value}-min.jpg` }
         // this.CurrentCard = { color: 'red', value: 'P2'.toString(), image: `/imgs/unocards/redP2-min.jpg` }
         // this.CurrentCard = { color: 'black', value: 'P4'.toString(), image: `/imgs/unocards/P4-min.jpg` }
         this.CurrentCardElement.style.backgroundImage = `url(${this.CurrentCard.image})`
@@ -238,7 +240,6 @@ export let GameCurrentState = {
         this.rotationElement = document.querySelector(".rotation-arrow")
         this.rotationElement.classList.add('clockwise')
         this.rotationElement.classList.remove('counter-clockwise')
-        console.log(this.rotationElement)
         this.rotation = 'clockWise'
 
         this.gameResultList = []
@@ -247,7 +248,6 @@ export let GameCurrentState = {
 
         this.colorsPlaceholderLayer = document.querySelector(".choose-color-layer")
         this.colorsPlaceholder = document.querySelectorAll(".Choose-color .color")
-        console.log(this.colorsPlaceholderLayer, this.colorsPlaceholder)
         // StopCardActive: false,
     },
 

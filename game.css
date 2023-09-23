@@ -151,7 +151,7 @@
 }
 
 .player-one .uno-card {
-    cursor: pointer;
+    /* cursor: pointer; */
     bottom: 0px;
     transition: all .2s linear;
 }
