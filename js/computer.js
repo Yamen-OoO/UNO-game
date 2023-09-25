@@ -99,7 +99,7 @@ export function disActive() {
             }
             console.info(this.aleratedUno)
             res()
-        }, 1000);
+        }, 2000);
     })
 }
 export function startTimer() {

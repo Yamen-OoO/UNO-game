@@ -1,4 +1,4 @@
-import { muteGameAudios, unMuteGameAudios } from "../audios.js";
+import { cardAudio, muteGameAudios, unMuteGameAudios } from "./audios.js";
 import { ThorwAnimation, bankCardAnimation, fadeInPlaceHolder } from "./amimations.js";
 import { changeGameState } from "./index.js";
 import { settings } from "./index.js";
@@ -280,6 +280,7 @@ export let GameCurrentState = {
             let element = this.thorwedCardElement
             ThorwAnimation(element)
             setTimeout(() => {
+                cardAudio('throw')
                 this.thorwedCardElement.style.display = 'none'
                 res()
             }, 1000);

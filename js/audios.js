@@ -18,7 +18,6 @@ let audios = {
     Blocker: [2,4,10,10,10,12,22],
     NoBlocker: [3,5,16,23],
     Normal :[11,12,14,16,17,18,20]
-
 }
 
 let speackingObj = new Audio()
@@ -38,16 +37,13 @@ export function Speack(typeee){
 
     }
 }
-window.onload = function(){
-}
-
 //~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~``
 
 let cardObj = new Audio()
-cardObj.volume = .5
+cardObj.volume = .3
 
 export function cardAudio(movment){
-    cardObj.src = `/audio/other/${movment}`
+    cardObj.src = `/audio/other/${movment}.mp3`
     cardObj.play()
 }
 
@@ -60,7 +56,7 @@ bakcgroundMusic.volume = .5
 export function playMusic(page){
     bakcgroundMusic.src = `/audio/music/${page}`
     bakcgroundMusic.play()
-    bakcgroundMusic.loop = true
+    bakcgroundMusic.loothrowp = true
 }
 
 
@@ -74,3 +70,4 @@ export function unMuteGameAudios(){
     cardObj.volume = .5
     speackingObj.volume = .5
 }
+

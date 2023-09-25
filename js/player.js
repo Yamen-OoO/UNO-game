@@ -2,7 +2,7 @@ import { hidePlayerCards, showPlayerCards } from "./amimations.js"
 import { generatePlayerProfile } from "./profile.js"
 import { GoDownAnimation, apendCards, fixLeftMargin, generatePlayerCards } from "./cards.js"
 import { GameCurrentState } from "./game.js"
-import { Speack } from "../audios.js"
+import { Speack, cardAudio } from "./audios.js"
 import * as ComputerMethodes from './computer.js'
 import * as UserMehtodes from './user.js'
 export let playersArray = []
@@ -37,31 +37,31 @@ export class Player {
     async checkTheCardEffect() {
         let newCardValue = GameCurrentState.CurrentCard.value
         if (newCardValue === 'R') {
-            //! not working
-            GameCurrentState.ChangeGCSRotation()
             console.log('Revverssee')
+            GameCurrentState.ChangeGCSRotation()
         }
         else if (newCardValue === "P4") {
-            GameCurrentState.IncreaseGCSACC(4)
             console.log('Acc + 4')
+            GameCurrentState.IncreaseGCSACC(4)
             await GameCurrentState.showColorsPlaceholder('P4', '', this.index)
         }
         else if (newCardValue === "P2") {
-            GameCurrentState.IncreaseGCSACC(2)
             console.log('Acc + 2')
+            GameCurrentState.IncreaseGCSACC(2)
         }
         else if (newCardValue === "S") {
             //~ UpdagtePlayerTrun after i check the wining state in chekckPlayerStateWining (game.js)
             console.log('Stop the next player')
         }
         else if (newCardValue === 'colors') {
-            // GameCurrentState.CurrentCard.color = 'red'
-            await GameCurrentState.showColorsPlaceholder('colors', '', this.index)
-
             console.log('change colorrrr')
             // update colors card img to dynamic color
+            // GameCurrentState.CurrentCard.color = 'red'
+            await GameCurrentState.showColorsPlaceholder('colors', '', this.index)
         }
     }
+
+    
     hasABlocker() {
         //p2 block it with p2 value or color
         //p4 block it with p4 value
@@ -100,6 +100,7 @@ export class Player {
         let cardIndex = cardindex
         let card = this.cardsArray[cardIndex]
         let cardImage = this.cardsArray[cardIndex].image
+        cardAudio('godown')
         await GoDownAnimation(cardIndex, this.index)
         this.removeCardFromArray(cardindex)
         await GameCurrentState.ThorwCardAnimation(cardImage)
@@ -197,6 +198,9 @@ class User extends Player {
     }
     checkCardCondition(cardindex , res){
         return UserMehtodes.checkCardCondition.call(this , cardindex , res)
+    }
+    disActivePlayerToPlay(){
+        return UserMehtodes.disActivePlayerToPlay.call(this)
     }
 
 }
