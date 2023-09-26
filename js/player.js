@@ -35,6 +35,7 @@ export class Player {
     }
 
     async checkTheCardEffect() {
+        console.log('test how many called 8888888888888888888888888888888888888')
         let newCardValue = GameCurrentState.CurrentCard.value
         if (newCardValue === 'R') {
             console.log('Revverssee')

@@ -1,6 +1,3 @@
-.menu-page {
-    display: block;
-}
 
 
 
@@ -16,10 +13,25 @@
 
 body {
     overflow: hidden;
-    background-image: url('/imgs/backgroundimgs/Untitled.gif');
-    background-size: 100%;
-    background-repeat: no-repeat;
+
 }
 #end{
     /* display: none; */
+}
+
+
+.loading-page{
+    width: 100%;
+    height: 100vh;
+    position: absolute;
+    left: 0;
+    top: 0;
+    background-image: url(/imgs/backgroundimgs/LoadingScreen.gif);
+    background-position: center;
+    background-size: cover;
+    z-index: 100000;
+    display: flex;
+    justify-content: center;
+    align-items:flex-end;
+    padding: 100px 0;
 }

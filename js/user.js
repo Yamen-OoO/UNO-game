@@ -8,10 +8,13 @@ export async function userPlay() {
 }
 
 export async function functionsHolder(res) {
+    console.log(this.cardsArray)
     await this.active(res)
     await this.activePlayerToPlay()
-    this.disActivePlayerToPlay()
+    // this.disActivePlayerToPlay()
     await this.disActive(res)
+    console.log(this.cardsArray)
+
 }
 
 export function active(res) {
@@ -86,13 +89,15 @@ export function activePlayerToPlay() {
                     console.log(cardsArray[i])
                     
                     if (cardsArray[i].value === increasingValue) {
-                        console.log('testt 11111111111111111111111111')
+                        console.log('%c add the eventlistner from acc = 4 ....all cards ','color:pink')
                         card.style.cursor = 'pointer'
                         let cardElementIndex = i
-                        card.addEventListener('click', () => {
-                            this.checkCardCondition(cardIndex, res)
-
-                        })
+                        // card.addEventListener('click', () => {
+                        //     this.checkCardCondition(cardIndex, res)
+                        // })
+                        card.onclick = ()=>{
+                            this.checkCardCondition(cardElementIndex , res)
+                        }
                     }
                     else{
                         console.log('hell no ...you cant throw it')
@@ -107,12 +112,15 @@ export function activePlayerToPlay() {
             console.log('cards  from activeplayertToPlay ', cards)
             cards.forEach((card, i) => {
                 card.style.cursor = 'pointer'
-                // console.log('%c the card index ','color:red', i)
+                console.log('%c add the eventlistner from acc = 0 ....all cards ','color:purple')
                 console.log('%c the card Array ', 'color:red', this.cardsArray)
-                card.addEventListener('click', () => {
-                    this.checkCardCondition(i, res)
+                // card.addEventListener('click', () => {
+                //     this.checkCardCondition(i, res)
 
-                })
+                // })
+                card.onclick = ()=>{
+                    this.checkCardCondition(i , res)
+                }
             })
         }
     })
@@ -120,10 +128,14 @@ export function activePlayerToPlay() {
 export function disActivePlayerToPlay() {
     let cards = [...this.cardsContainerElement.children]
     cards.forEach((card, i) => {
+        console.log('%c remove eventlistner test 1' , 'color:orange')
         card.style.cursor = 'auto'
-        card.removeEventListener('click', () => {
-            this.checkCardCondition(i, res)
-        })
+        // card.removeEventListener('click', () => {
+        //     this.checkCardCondition(i, res)
+        // })
+        card.onclick = ()=>{
+            return
+        }
     })
 }
 
@@ -131,25 +143,27 @@ export function disActivePlayerToPlay() {
 
 export async function checkCardCondition(cardIndex, res) {
     if (this.endPlaying === false) {
-        // console.log('%c the card index ', 'color:red', cardIndex)
+        console.log('%c the card index ', 'color:red', cardIndex)
         // console.log('%c the card Array ', 'color:red', this.cardsArray)
         try {
             let clickedCardColor = this.cardsArray[cardIndex].color
             let clickedCardValue = this.cardsArray[cardIndex].value
+            console.log('%c clicked card is  ' , 'backgroundColor : red' , clickedCardColor , clickedCardValue )
             if (clickedCardColor === GameCurrentState.CurrentCard.color || clickedCardValue === GameCurrentState.CurrentCard.value || clickedCardColor === 'black') {
-                this.endPlaying = true
+                this.disActivePlayerToPlay()
+                console.log(this.cardsArray)
                 console.log('same color or value or its black card')
                 await this.thorwACard(cardIndex)
                 this.updateCardsNumberElement()
-                console.log(this.cardsArray)
                 await this.checkTheCardEffect()
+                this.endPlaying = true
                 res()
             }
             else {
                 return
             }
         }
-        catch (err) {
+        catch(err) {
             console.log(err)
         }
     }
@@ -165,11 +179,27 @@ export function startTimer(res) {
     clearInterval(timer);
     progressBar.style.transform = "rotate(0deg)";
     // !11111111111111111111111111111
-    timer = setInterval(() => {
+    timer = setInterval(async () => {
         seconds--;
         if (seconds <= 0 || this.endPlaying === true) {
             clearInterval(timer);
             progressBar.style.display = 'none'
+            let testIfColorsPlacholderShownAndUserDidntClick = window.getComputedStyle(GameCurrentState.colorsPlaceholderLayer).getPropertyValue('display')
+
+            //if didint choose a color and tiem is up
+            if(testIfColorsPlacholderShownAndUserDidntClick === 'flex'){
+                GameCurrentState.colorsPlaceholderLayer.style.display = 'none'
+                let typeeee = GameCurrentState.CurrentCard.value
+                GameCurrentState.setChoosenColor('blue' , typeeee)
+            }
+
+            // if didnt throw the blocker
+            // if(GameCurrentState.Acc !==0){
+            //     let cardsNumber = GameCurrentState.Acc
+            //     await this.addCards(cardsNumber)
+            //     GameCurrentState.ResetGCSACC()
+            // }
+            this.disActivePlayerToPlay()
             this.disActive(res)
         } else {
             progressBar.style.transform = `rotate(${((10 - seconds) / 10) * 360}deg)`;

@@ -298,22 +298,31 @@ export let GameCurrentState = {
             this.colorsPlaceholderLayer.style.display = 'flex'
 
             // //! if a player
-            // if (playerIndex === 0) {
-            //     colorsPlaceholder.forEach(color => {
-            //         color.addEventListener('click', function () {
-            //             let choosenColor = color.getAttribute('data-color')
-            //             this.setChoosenColor(choosenColor)
-            //             setTimeout(() => {
-            //                 resolve()
-            //             }, 1000);
-            //         })
-            //     })
-            // }
+            if (playerIndex === 0) {
+                this.colorsPlaceholder.forEach(color => {
+                    color.style.cursor = 'pointer'
+                    console.log('showPlaceHOlder colors testttttttttttttttttttttttttttttttttt')
+
+                    color.onclick =  () => {
+                        let choosenColor = color.getAttribute('data-color')
+                        this.setChoosenColor(choosenColor , typeee)
+                        this.colorsPlaceholderLayer.style.display = 'none'
+                        setTimeout(() => {
+                            resolve()
+                        }, 1000);
+                    }
+                })
+            }
 
 
             //// ! if computer
-            if (playerIndex !== 10) {
+            if (playerIndex !== 0) {
                 let choosenColor = 'blue'
+                this.colorsPlaceholder.forEach(color =>{
+                    color.style.cursor = 'auto'
+                    color.onclick = null
+
+                })
                 this.setChoosenColor(choosenColor, typeee)
 
                 setTimeout(() => {
@@ -328,6 +337,7 @@ export let GameCurrentState = {
 
     },
     setChoosenColor(CC, typeee) {
+        console.log("test the function hereeeeeeeeeeeeeeeeeeeeeeeeeeeeee how many times its called")
         // this.colorsPlaceholder.forEach(color => console.log(color))
         this.colorsPlaceholder.forEach(color => {
             if (color.getAttribute('data-color') === CC) {

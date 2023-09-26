@@ -1,0 +1,17 @@
+.menu-page {
+    display: block;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 100vh;
+    background-image: url('/imgs/backgroundimgs/Untitled.gif');
+    background-size: 100%;
+    background-repeat: no-repeat;
+}
+
+.menu {
+    background-color: white;
+    width: 500px;
+    height: 400px;
+    padding: 20px;
+}
