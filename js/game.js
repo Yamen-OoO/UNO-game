@@ -248,6 +248,8 @@ export let GameCurrentState = {
 
         this.colorsPlaceholderLayer = document.querySelector(".choose-color-layer")
         this.colorsPlaceholder = document.querySelectorAll(".Choose-color .color")
+
+        this.unoButton = document.querySelector("button.uno-button")
         // StopCardActive: false,
     },
 

@@ -115,7 +115,7 @@ export class Player {
 
 
 
-    activeAlertUnoFromPlayer() {
+    updatePlayerBase() {
         if (this.cardsArray.length === 3 && this.aleratedUno === false) {
             console.log(this.cardsArray.length, 'cards leftttttttttttttttttttttttttttttttttttttt before thrwing')
             this.aleratedUno = true
@@ -135,6 +135,7 @@ export class Player {
             this.aleratedUno = false
             this.cardsContainerElement.classList.remove('wining-base-shadow')
             this.cardsContainerElement.style.backgroundColor = 'blue'
+            this.cardsNumberElement.style.backgroundColor = 'blue'
             //! change base color to default
             //! remove moving shadow
         }
@@ -176,6 +177,7 @@ class Computer extends Player {
 
 
 class User extends Player {
+    saiedUno = false
     constructor(one, tow, three, four, five) {
         super(one, tow, three, four, five)
     }
@@ -202,6 +204,21 @@ class User extends Player {
     }
     disActivePlayerToPlay(){
         return UserMehtodes.disActivePlayerToPlay.call(this)
+    }
+    activeBankCard(res){
+        return UserMehtodes.activeBankCard.call(this , res)
+    }
+    acivePlayerCards(res){
+        return UserMehtodes.acivePlayerCards.call(this , res)
+    }
+    checkToActiveUnoButton(){
+        return UserMehtodes.checkToActiveUnoButton.call(this)
+    }
+    activeUnoButton(){
+        return UserMehtodes.activeUnoButton.call(this)
+    }
+    disActiveUnoButton(){
+        return UserMehtodes.disActiveUnoButton.call(this)
     }
 
 }

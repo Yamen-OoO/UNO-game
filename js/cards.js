@@ -39,7 +39,7 @@ export function generatePlayerCards(cardContainerIndex) {
 
     //^ generate 7 card object
     function generateCardsArray() {
-        for (let i = 0; i <= 2; i++) {
+        for (let i = 0; i <= 3; i++) {
             //^ [1-9 , S , P , R] uno card
             dynamicType = Math.floor(Math.random() * 15)
             if (dynamicType > 10) {
@@ -56,7 +56,7 @@ export function generatePlayerCards(cardContainerIndex) {
     }
 
     function generateNewCardElement(cardContainerIndex) {
-        for (let i = 0; i <= 2; i++) {
+        for (let i = 0; i <= 3; i++) {
             let card = document.createElement("div")
             card.classList.add("uno-card")
             if (cardContainerIndex === 0) {

@@ -331,7 +331,7 @@
 
 
 
-.cards-field-container button {
+.cards-field-container button.uno-button {
     position: absolute;
     right: 0;
     padding: 15px;
@@ -344,7 +344,7 @@
     font-size: 1.2rem;
     font-weight: bold;
     /* text-shadow: -3px 0px 10px red; */
-    cursor: pointer;
+    cursor: auto;
 }
 
 

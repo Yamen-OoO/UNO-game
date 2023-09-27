@@ -23,7 +23,7 @@ export async function think() {
         if (result !== false) {
             let cardIndex = result.cardIndex
             let increasingValue = result.increasingValue
-            this.activeAlertUnoFromPlayer()
+            this.updatePlayerBase()
             await this.thorwACard(cardIndex)
             this.updateCardsNumberElement()
             await this.checkTheCardEffect()
@@ -33,7 +33,7 @@ export async function think() {
             let ACCCCCC = GameCurrentState.Acc
             await this.addCards(ACCCCCC)
             this.updateCardsNumberElement()
-            this.activeAlertUnoFromPlayer()
+            this.updatePlayerBase()
             GameCurrentState.ResetGCSACC()
             //! stop the player to play 
             console.log('the New ACC is ', GameCurrentState.Acc)
@@ -46,7 +46,7 @@ export async function think() {
         let choosenCardIndex = this.checkForAvailbeCards()
         if (choosenCardIndex !== false) {
             console.log('have a card')
-            this.activeAlertUnoFromPlayer()
+            this.updatePlayerBase()
             await this.thorwACard(choosenCardIndex)
             this.updateCardsNumberElement()
             await this.checkTheCardEffect()
@@ -55,11 +55,11 @@ export async function think() {
             console.log('dont have a card add a new one')
             await this.addCards(1)
             this.updateCardsNumberElement()
-            this.activeAlertUnoFromPlayer()
+            this.updatePlayerBase()
             let choosenCardIndex = this.checkForAvailbeCards()
             console.log(choosenCardIndex)
             if (choosenCardIndex !== false) {
-                this.activeAlertUnoFromPlayer()
+                this.updatePlayerBase()
                 await this.thorwACard(choosenCardIndex)
                 this.updateCardsNumberElement()
                 await this.checkTheCardEffect()

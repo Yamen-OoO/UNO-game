@@ -14,6 +14,10 @@ export async function functionsHolder(res) {
     // this.disActivePlayerToPlay()
     await this.disActive(res)
     console.log(this.cardsArray)
+    console.log(this.aleratedUno)
+
+    console.log('%c alertUno ', 'color:pink', this.aleratedUno)
+    console.log('%c saiedUno ', 'color:pink', this.saiedUno)
 
 }
 
@@ -45,6 +49,14 @@ export function disActive(res) {
                 this.cardsContainerElement.style.backgroundColor = 'green'
                 this.cardsNumberElement.style.backgroundColor = 'green'
             }
+            let testIfColorsPlacholderShownAndUserDidntClick = window.getComputedStyle(GameCurrentState.colorsPlaceholderLayer).getPropertyValue('display')
+
+            //if didint choose a color and tiem is up
+            if (testIfColorsPlacholderShownAndUserDidntClick === 'flex') {
+                GameCurrentState.colorsPlaceholderLayer.style.display = 'none'
+                let typeeee = GameCurrentState.CurrentCard.value
+                GameCurrentState.setChoosenColor('blue', typeeee)
+            }
             resolve()
             res()
         }, 2000);
@@ -69,6 +81,10 @@ export function activePlayerToPlay() {
                 let ACCCCCC = GameCurrentState.Acc
                 await this.addCards(ACCCCCC)
                 this.updateCardsNumberElement()
+                if (this.cardsArray.length > 2) {
+                    this.saiedUno = false
+                }
+                this.updatePlayerBase()
                 // this.activeAlertUnoFromPlayer()
                 GameCurrentState.ResetGCSACC()
                 this.endPlaying = true
@@ -77,6 +93,7 @@ export function activePlayerToPlay() {
             }
             else {
                 //have a blocker
+                this.checkToActiveUnoButton()
                 let cardIndex = result.cardIndex
                 let increasingValue = result.increasingValue === 4 ? 'P4' : 'P2'
                 console.log(cardIndex)
@@ -85,21 +102,21 @@ export function activePlayerToPlay() {
                 let cards = [...this.cardsContainerElement.children]
                 let cardsArray = this.cardsArray
                 cards.forEach((card, i) => {
-                    console.log(card )
+                    console.log(card)
                     console.log(cardsArray[i])
-                    
+
                     if (cardsArray[i].value === increasingValue) {
-                        console.log('%c add the eventlistner from acc = 4 ....all cards ','color:pink')
+                        console.log('%c add the eventlistner from acc = 4 ....all cards ', 'color:pink')
                         card.style.cursor = 'pointer'
                         let cardElementIndex = i
                         // card.addEventListener('click', () => {
                         //     this.checkCardCondition(cardIndex, res)
                         // })
-                        card.onclick = ()=>{
-                            this.checkCardCondition(cardElementIndex , res)
+                        card.onclick = () => {
+                            this.checkCardCondition(cardElementIndex, res)
                         }
                     }
-                    else{
+                    else {
                         console.log('hell no ...you cant throw it')
                     }
                 })
@@ -109,34 +126,92 @@ export function activePlayerToPlay() {
         else {
             console.log('%c ACC is 0 now')
             let cards = [...this.cardsContainerElement.children]
+            console.log(cards)
             console.log('cards  from activeplayertToPlay ', cards)
-            cards.forEach((card, i) => {
-                card.style.cursor = 'pointer'
-                console.log('%c add the eventlistner from acc = 0 ....all cards ','color:purple')
-                console.log('%c the card Array ', 'color:red', this.cardsArray)
-                // card.addEventListener('click', () => {
-                //     this.checkCardCondition(i, res)
+            this.checkToActiveUnoButton()
+            this.activeBankCard(res)
+            this.acivePlayerCards(res)
 
-                // })
-                card.onclick = ()=>{
-                    this.checkCardCondition(i , res)
-                }
-            })
         }
     })
 }
+export function acivePlayerCards(res) {
+    let cards = [...this.cardsContainerElement.children]
+    cards.forEach((card, i) => {
+        card.style.cursor = 'pointer'
+        console.log('%c add the eventlistner from acc = 0 ....all cards ', 'color:purple')
+        console.log('%c the card Array ', 'color:red', this.cardsArray)
+        card.onclick = () => {
+            this.checkCardCondition(i, res)
+        }
+    })
+
+}
+export function activeBankCard(res) {
+    GameCurrentState.bankCardTop.style.cursor = 'pointer'
+    GameCurrentState.bankCardTop.onclick = async (e) => {
+        GameCurrentState.bankCardTop.style.cursor = 'auto'
+        GameCurrentState.bankCardTop.onclick = null
+        await this.addCards(1)
+        if (this.cardsArray.length > 2) {
+            this.saiedUno = false
+        }
+        this.checkToActiveUnoButton()
+        this.updatePlayerBase()
+        this.acivePlayerCards(res)
+    }
+}
+
+export function checkToActiveUnoButton() {
+
+    //! if i have ava cards to palyyyyyyyyyyyyy
+    if (this.cardsArray.length === 3) {
+        this.activeUnoButton()
+    }
+    else {
+        this.disActiveUnoButton()
+    }
+}
+export function activeUnoButton() {
+    let unoButton = GameCurrentState.unoButton
+    unoButton.style.cursor = 'pointer'
+    unoButton.style.backgroundColor = 'red'
+    unoButton.onclick = () => {
+        this.saiedUno = true
+        console.log('unooooooooooooooooooooooooooooooooooooooo')
+        this.disActiveUnoButton()
+    }
+
+}
+export function disActiveUnoButton() {
+    let unoButton = GameCurrentState.unoButton
+    unoButton.style.backgroundColor = 'black'
+    unoButton.style.cursor = 'auto'
+    unoButton.onclick = null
+}
+
+
+
+
+
+
+
 export function disActivePlayerToPlay() {
     let cards = [...this.cardsContainerElement.children]
     cards.forEach((card, i) => {
-        console.log('%c remove eventlistner test 1' , 'color:orange')
+        console.log('%c remove eventlistner test 1', 'color:orange')
         card.style.cursor = 'auto'
-        // card.removeEventListener('click', () => {
-        //     this.checkCardCondition(i, res)
-        // })
-        card.onclick = ()=>{
+        card.onclick = () => {
             return
         }
     })
+    GameCurrentState.bankCardTop.style.cursor = 'auto'
+    GameCurrentState.bankCardTop.onclick = null
+
+    GameCurrentState.unoButton.style.backgroundColor = 'black'
+    GameCurrentState.unoButton.style.cursor = 'auto'
+    GameCurrentState.unoButton.onclick = null
+
 }
 
 
@@ -148,11 +223,12 @@ export async function checkCardCondition(cardIndex, res) {
         try {
             let clickedCardColor = this.cardsArray[cardIndex].color
             let clickedCardValue = this.cardsArray[cardIndex].value
-            console.log('%c clicked card is  ' , 'backgroundColor : red' , clickedCardColor , clickedCardValue )
+            console.log('%c clicked card is  ', 'backgroundColor : red', clickedCardColor, clickedCardValue)
             if (clickedCardColor === GameCurrentState.CurrentCard.color || clickedCardValue === GameCurrentState.CurrentCard.value || clickedCardColor === 'black') {
                 this.disActivePlayerToPlay()
                 console.log(this.cardsArray)
                 console.log('same color or value or its black card')
+                this.updatePlayerBase()
                 await this.thorwACard(cardIndex)
                 this.updateCardsNumberElement()
                 await this.checkTheCardEffect()
@@ -163,7 +239,7 @@ export async function checkCardCondition(cardIndex, res) {
                 return
             }
         }
-        catch(err) {
+        catch (err) {
             console.log(err)
         }
     }
@@ -187,16 +263,31 @@ export function startTimer(res) {
             let testIfColorsPlacholderShownAndUserDidntClick = window.getComputedStyle(GameCurrentState.colorsPlaceholderLayer).getPropertyValue('display')
 
             //if didint choose a color and tiem is up
-            if(testIfColorsPlacholderShownAndUserDidntClick === 'flex'){
+            if (testIfColorsPlacholderShownAndUserDidntClick === 'flex') {
                 GameCurrentState.colorsPlaceholderLayer.style.display = 'none'
                 let typeeee = GameCurrentState.CurrentCard.value
-                GameCurrentState.setChoosenColor('blue' , typeeee)
+                GameCurrentState.setChoosenColor('blue', typeeee)
             }
+
+
+            if (this.cardsArray.length < 3 && this.saiedUno === false) {
+                await this.addCards(2)
+                this.updateCardsNumberElement()
+                this.updatePlayerBase()
+                console.log('you didnt say unoooooo')
+            }
+            if (this.length > 3) {
+                console.log('you can not say it now ')
+                this.saiedUno = false
+                this.aleratedUno = false
+            }
+
 
             // if didnt throw the blocker
             // if(GameCurrentState.Acc !==0){
             //     let cardsNumber = GameCurrentState.Acc
             //     await this.addCards(cardsNumber)
+            //     this.updatePlayerBase()
             //     GameCurrentState.ResetGCSACC()
             // }
             this.disActivePlayerToPlay()
