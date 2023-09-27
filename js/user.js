@@ -92,6 +92,7 @@ export function activePlayerToPlay() {
                 console.log('the New ACC is ', GameCurrentState.Acc)
             }
             else {
+                this.haveABlocker = true
                 //have a blocker
                 this.checkToActiveUnoButton()
                 let cardIndex = result.cardIndex
@@ -225,6 +226,7 @@ export async function checkCardCondition(cardIndex, res) {
             let clickedCardValue = this.cardsArray[cardIndex].value
             console.log('%c clicked card is  ', 'backgroundColor : red', clickedCardColor, clickedCardValue)
             if (clickedCardColor === GameCurrentState.CurrentCard.color || clickedCardValue === GameCurrentState.CurrentCard.value || clickedCardColor === 'black') {
+                this.haveABlocker = false
                 this.disActivePlayerToPlay()
                 console.log(this.cardsArray)
                 console.log('same color or value or its black card')
@@ -276,20 +278,23 @@ export function startTimer(res) {
                 this.updatePlayerBase()
                 console.log('you didnt say unoooooo')
             }
+            
+
+            // if didnt throw the blocker
+            if(GameCurrentState.Acc !==0 && this.haveABlocker === true){
+                let cardsNumber = GameCurrentState.Acc
+                await this.addCards(cardsNumber)
+                this.updateCardsNumberElement()
+                this.updatePlayerBase()
+                GameCurrentState.ResetGCSACC()
+                this.haveABlocker = false
+                console.log('you didnt throw the blocker')
+            }
             if (this.length > 3) {
                 console.log('you can not say it now ')
                 this.saiedUno = false
                 this.aleratedUno = false
             }
-
-
-            // if didnt throw the blocker
-            // if(GameCurrentState.Acc !==0){
-            //     let cardsNumber = GameCurrentState.Acc
-            //     await this.addCards(cardsNumber)
-            //     this.updatePlayerBase()
-            //     GameCurrentState.ResetGCSACC()
-            // }
             this.disActivePlayerToPlay()
             this.disActive(res)
         } else {

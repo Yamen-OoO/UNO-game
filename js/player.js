@@ -177,6 +177,7 @@ class Computer extends Player {
 
 
 class User extends Player {
+    haveABlocker = false
     saiedUno = false
     constructor(one, tow, three, four, five) {
         super(one, tow, three, four, five)
