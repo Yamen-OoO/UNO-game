@@ -2,7 +2,7 @@ import { goDownAnimation, showAddedCardAnimation } from "./amimations.js"
 
 // let cardColors = ['red', 'blue', 'green', 'yellow']
 let cardColors = ['blue']
-let cardValues = [1, 2, 3, 4, 5, 6, 7, 8, 9, 0, "R", "S", "P2"]
+let cardValues = [1, 2, 3, 4, 5, 6, 7, 8, 9, 0, "R","R","R","R","R","R","R","R", "S", "P2"]
 let CardBlack = ['colors', 'P4']
 
 let player1CardsContainer = document.querySelector(".player-one .unocards-container")
@@ -42,7 +42,7 @@ export function generatePlayerCards(cardContainerIndex) {
         for (let i = 0; i <= 3; i++) {
             //^ [1-9 , S , P , R] uno card
             dynamicType = Math.floor(Math.random() * 15)
-            if (dynamicType > 10) {
+            if (dynamicType > 2) {
                 dynamicColor = cardColors[Math.floor(Math.random() * cardColors.length)]
                 dynamicValue = cardValues[Math.floor(Math.random() * cardValues.length)]
                 cardsArray.push(new Card(dynamicColor, dynamicValue, `/imgs/unocards/${dynamicColor}${dynamicValue}-min.jpg`))

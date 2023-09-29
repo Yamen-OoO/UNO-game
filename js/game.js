@@ -201,13 +201,15 @@ export let GameCurrentState = {
     ChangeGCSRotation: function () {
         if (this.rotation === 'counterClockWise') {
             this.rotation = 'clockWise'
-            this.rotationElement.classList.remove("counter-clockwise")
-            this.rotationElement.classList.add("clockwise")
+            this.rotationElement.style.animationDirection = 'normal'
+            // this.rotationElement.classList.remove("counter-clockwise")
+            // this.rotationElement.classList.add("clockwise")
         }
         else {
             this.rotation = 'counterClockWise'
-            this.rotationElement.classList.add("counter-clockwise")
-            this.rotationElement.classList.remove("clockwise")
+        this.rotationElement.style.animationDirection = 'reverse'
+            // this.rotationElement.classList.add("counter-clockwise")
+            // this.rotationElement.classList.remove("clockwise")
         }
     },
 
@@ -238,8 +240,8 @@ export let GameCurrentState = {
         this.thorwedCardElement = document.querySelector(".cards-field-container .thrown-card")
 
         this.rotationElement = document.querySelector(".rotation-arrow")
-        this.rotationElement.classList.add('clockwise')
-        this.rotationElement.classList.remove('counter-clockwise')
+        // this.rotationElement.classList.add('clockwise')
+        // this.rotationElement.classList.remove('counter-clockwise')
         this.rotation = 'clockWise'
 
         this.gameResultList = []

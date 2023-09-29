@@ -12,6 +12,135 @@
 .menu {
     background-color: white;
     width: 500px;
-    height: 400px;
+    height: 450px;
     padding: 20px;
+    position: relative;
+    border-radius: 40px;
+    padding: 70px 30px 0;
+}
+
+.menu::before {
+    content: 'UNO';
+    position: absolute;
+    top: -120px;
+    font-family: 'Courier New', Courier, monospace;
+    left: 50%;
+    transform: translateX(-50%);
+    font-size: 13rem;
+    font-weight: 900;
+    color: #5182FF;
+    -webkit-text-stroke: 2px #5C2DE1
+}
+
+.menu-slide1 {
+    /* display: none; */
+    position: relative;
+    border: 1px solid red;
+    height: 80%;
+}
+.menu-slide1 button.start{
+    position: absolute;
+    left: 50%;
+    top:50%;
+    transform: translate(-50% , -50%);
+}
+.menu-slide2 {
+    /* border: 1px solid red; */
+    display: none;
+}
+
+.menu-slide2 .settings {
+    margin-bottom: 40px;
+}
+
+.menu-slide2 .settings>div:first-child {
+    display: flex;
+    gap: 20px;
+}
+
+.menu-slide2 h1 {
+    font-size: 2.2rem;
+    color: #5182FF;
+    -webkit-text-stroke: 2px #5C2DE1;
+    margin-bottom: 15px;
+}
+
+.menu-slide2 .options {
+    display: flex;
+    gap: 5px;
+    margin-bottom: 30px;
+}
+
+.menu-slide2 .option {
+    cursor: pointer;
+    padding: 10px;
+    /* border: 1px solid black; */
+    width: 105px;
+    text-align: center;
+    background-color: #FECE51;
+    color: white;
+    font-weight: bold;
+    font-size: 1.2rem;
+}
+.menu-slide2 .option.choosen {
+    cursor: auto;
+    background-color: gold;
+}
+.menu-slide2 .option.soon {
+    cursor: auto;
+    background-color: #eedcaf;
+    position: relative;
+}
+.menu-slide2 .option.soon::after {
+    content: 'Soon';
+    position: absolute;
+    right: 0;
+    top:-10px;
+    font-size: .9rem;
+    padding: 2px;
+    background-color: red;
+}
+
+
+.menu-slide2 .settings {
+    margin-bottom: 40px;
+}
+.menu-slide2 .backgroud{
+    width: 100px;
+    height: 100px;
+    margin-right: 5px;
+    /* border: 1px solid black; */
+    cursor: pointer;
+    background-size: cover;
+    background-position: center;
+}
+.menu-slide2 .backgroud.bg-1{
+    background-image: url(imgs/backgroundimgs/1.avif);
+}
+.menu-slide2 .backgroud.bg-2{
+    background-image: url(imgs/backgroundimgs/1.jpg);
+}
+.menu-slide2 .backgroud.bg-3{
+    background-image: url(imgs/backgroundimgs/2.jpg);
+}
+.menu-slide2 .backgroud.bg-4{
+    background-image: url(imgs/backgroundimgs/3.jpg);
+}
+.menu-slide2 .backgroud.choosen{
+    border: 5px solid gold;
+    cursor: auto;
+}
+#start , .start{
+    padding: 10px;
+    font-size: 1rem;
+    margin:  0 auto;
+    width: 120px;
+    display: block;
+    background-color: gold;
+    border: none;
+    outline: none;
+    color: white;
+    font-weight: bold;
+    border-radius: 10px;
+    cursor: pointer;
 }
