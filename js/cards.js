@@ -1,8 +1,8 @@
 import { goDownAnimation, showAddedCardAnimation } from "./amimations.js"
 
-// let cardColors = ['red', 'blue', 'green', 'yellow']
-let cardColors = ['blue']
-let cardValues = [1, 2, 3, 4, 5, 6, 7, 8, 9, 0, "R","R","R","R","R","R","R","R", "S", "P2"]
+let cardColors = ['red', 'blue', 'green', 'yellow']
+// let cardColors = ['blue']
+let cardValues = [1, 2, 3, 4, 5, 6, 7, 8, 9, 0, "R", "S", "P2"]
 let CardBlack = ['colors', 'P4']
 
 let player1CardsContainer = document.querySelector(".player-one .unocards-container")
@@ -39,7 +39,7 @@ export function generatePlayerCards(cardContainerIndex) {
 
     //^ generate 7 card object
     function generateCardsArray() {
-        for (let i = 0; i <= 3; i++) {
+        for (let i = 0; i <= 6; i++) {
             //^ [1-9 , S , P , R] uno card
             dynamicType = Math.floor(Math.random() * 15)
             if (dynamicType > 2) {
@@ -56,7 +56,7 @@ export function generatePlayerCards(cardContainerIndex) {
     }
 
     function generateNewCardElement(cardContainerIndex) {
-        for (let i = 0; i <= 3; i++) {
+        for (let i = 0; i <= 6; i++) {
             let card = document.createElement("div")
             card.classList.add("uno-card")
             if (cardContainerIndex === 0) {
@@ -66,8 +66,8 @@ export function generatePlayerCards(cardContainerIndex) {
             }
             else {
                 card.classList.add("computercard")
-                card.style.backgroundImage = `url(${cardsArray[i].image})`
-                // card.style.backgroundImage = 'url("/imgs/unocards/_-min.jpeg")'
+                // card.style.backgroundImage = `url(${cardsArray[i].image})`
+                card.style.backgroundImage = 'url("/imgs/unocards/_-min.jpeg")'
             }
             playersUnoContainers[cardContainerIndex].appendChild(card)
         }
@@ -175,8 +175,8 @@ function generateNewCardElement(cardImg, cardContainerIndex) {
     }
     else {
         card.classList.add("computercard")
-        card.style.backgroundImage = `url(${cardImg})`
-        // card.style.backgroundImage = 'url("/imgs/unocards/_-min.jpeg")'
+        // card.style.backgroundImage = `url(${cardImg})`
+        card.style.backgroundImage = 'url("/imgs/unocards/_-min.jpeg")'
     }
 
 

@@ -293,8 +293,8 @@ export function ClearPlayerArrayAndCardsElementsAndProfilesResetElements() {
     //! clear elements
     for (let i = 0; i <= 3; i++) {
         playersArray[i].cardsContainerElement.classList.remove("wining-base-shadow")
-        playersArray[i].cardsContainerElement.style.backgroundColor = 'green'
-        playersArray[i].cardsNumberElement.style.backgroundColor = 'green'
+        playersArray[i].cardsContainerElement.style.backgroundColor = ' rgba(3, 3, 3, 0.872)'
+        playersArray[i].cardsNumberElement.style.backgroundColor = ' rgba(3, 3, 3, 0.872)'
         playersArray[i].cardsNumberElement.textContent = '7'
         playersUnoContainers[i].innerHTML = null
         let container = playersUnoContainers[i]

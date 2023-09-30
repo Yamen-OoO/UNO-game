@@ -1,9 +1,10 @@
-import { cardAudio, muteGameAudios, unMuteGameAudios } from "./audios.js";
+import { cardAudio, muteGameAudios, playMusic, setLanguage, unMuteGameAudios } from "./audios.js";
 import { ThorwAnimation, bankCardAnimation, fadeInPlaceHolder } from "./amimations.js";
 import { changeGameState } from "./index.js";
 import { settings } from "./index.js";
 import { ClearPlayerArrayAndCardsElementsAndProfilesResetElements, generatePlayers, playersArray, showPlayerCardsAnimation } from "./player.js";
 import { resetNamesArray } from "./profile.js";
+let gamePage = document.querySelector(".game-page")
 let endGameButtons = document.querySelectorAll(".game-page button.end")
 let AudioButton = document.querySelector(".game-page button.audio")
 let resultPlacholder = document.querySelector(".result-placeholer")
@@ -39,6 +40,9 @@ AudioButton.addEventListener('click', () => {
 
 //* GamePage Main Fucntion That run every Game
 export async function runGame() {
+    gamePage.style.backgroundImage = `url(/imgs/backgroundimgs/${settings.background}-min.jpg)`
+    setLanguage(settings.lang)
+    // playMusic('game')
     //^ 0) bases(rec , circle) and bankCard , unobutton , exit button are made with normal html 
 
     //^ 1) generate gcs object depend on settings

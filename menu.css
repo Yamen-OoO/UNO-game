@@ -35,7 +35,7 @@
 .menu-slide1 {
     /* display: none; */
     position: relative;
-    border: 1px solid red;
+    /* border: 1px solid red; */
     height: 80%;
 }
 .menu-slide1 button.start{
@@ -43,6 +43,9 @@
     left: 50%;
     top:50%;
     transform: translate(-50% , -50%);
+    width: 100px;
+    height: 50px;
+    font-size: 1.5rem;
 }
 .menu-slide2 {
     /* border: 1px solid red; */
@@ -81,6 +84,8 @@
     color: white;
     font-weight: bold;
     font-size: 1.2rem;
+    transition: .2s linear;
+
 }
 .menu-slide2 .option.choosen {
     cursor: auto;
@@ -113,21 +118,22 @@
     cursor: pointer;
     background-size: cover;
     background-position: center;
+    transition: .2s linear;
 }
 .menu-slide2 .backgroud.bg-1{
-    background-image: url(imgs/backgroundimgs/1.avif);
+    background-image: url(imgs/backgroundimgs/1-min.jpg);
 }
 .menu-slide2 .backgroud.bg-2{
-    background-image: url(imgs/backgroundimgs/1.jpg);
+    background-image: url(imgs/backgroundimgs/2-min.jpg);
 }
 .menu-slide2 .backgroud.bg-3{
-    background-image: url(imgs/backgroundimgs/2.jpg);
+    background-image: url(imgs/backgroundimgs/3-min.jpg);
 }
 .menu-slide2 .backgroud.bg-4{
-    background-image: url(imgs/backgroundimgs/3.jpg);
+    background-image: url(imgs/backgroundimgs/4-min.jpg);
 }
 .menu-slide2 .backgroud.choosen{
-    border: 5px solid gold;
+    outline: 5px solid gold;
     cursor: auto;
 }
 #start , .start{

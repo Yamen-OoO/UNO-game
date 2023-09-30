@@ -94,8 +94,8 @@ export function disActive() {
                 this.cardsContainerElement.style.backgroundColor = 'gold'
                 this.cardsNumberElement.style.backgroundColor = 'gold'
             } else {
-                this.cardsContainerElement.style.backgroundColor = 'green'
-                this.cardsNumberElement.style.backgroundColor = 'green'
+                this.cardsContainerElement.style.backgroundColor = ' rgba(3, 3, 3, 0.872)'
+                this.cardsNumberElement.style.backgroundColor = ' rgba(3, 3, 3, 0.872)'
             }
             console.info(this.aleratedUno)
             res()

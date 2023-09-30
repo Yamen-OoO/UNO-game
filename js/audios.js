@@ -1,4 +1,4 @@
-let language = 'arabic'
+let language 
 
 
 export function setLanguage(lan){
@@ -54,7 +54,7 @@ let bakcgroundMusic = new Audio()
 bakcgroundMusic.volume = .5
 
 export function playMusic(page){
-    bakcgroundMusic.src = `/audio/music/${page}`
+    bakcgroundMusic.src = `/audio/music/${page}.mp3`
     bakcgroundMusic.play()
     bakcgroundMusic.loothrowp = true
 }
