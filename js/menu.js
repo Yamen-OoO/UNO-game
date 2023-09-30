@@ -1,3 +1,4 @@
+import { Speack, playMusic } from "./audios.js";
 import { changeGameState } from "./index.js"
 import { settings } from "./index.js";
 
@@ -14,8 +15,10 @@ startGameButton2.addEventListener('click', () => {
 })
 
 startGameButton1.onclick = () => {
+    Speack('uno')
     slide2.style.display = 'block'
     slide1.style.display = 'none'
+    playMusic('menu')
 }
 
 

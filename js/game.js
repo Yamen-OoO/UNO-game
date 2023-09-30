@@ -42,7 +42,7 @@ AudioButton.addEventListener('click', () => {
 export async function runGame() {
     gamePage.style.backgroundImage = `url(/imgs/backgroundimgs/${settings.background}-min.jpg)`
     setLanguage(settings.lang)
-    // playMusic('game')
+    playMusic('game')
     //^ 0) bases(rec , circle) and bankCard , unobutton , exit button are made with normal html 
 
     //^ 1) generate gcs object depend on settings
@@ -267,6 +267,7 @@ export let GameCurrentState = {
     BankCardAnimation(cardsdNumber) {
         let NumberOfanimations = cardsdNumber
         let element = this.bankCardTop
+        cardAudio('godown')
         bankCardAnimation(element, NumberOfanimations)
         return new Promise(res => {
             setTimeout(() => {
@@ -325,7 +326,16 @@ export let GameCurrentState = {
 
             //// ! if computer
             if (playerIndex !== 0) {
-                let choosenColor = 'blue'
+                let colorsCountObj = {}
+                playersArray[playerIndex].cardsArray.forEach(card =>{
+                    colorsCountObj[card.color] = (colorsCountObj[card.color] ||0) + 1
+                })
+
+                let maxcolorsDuplicatedCount = Math.max(...Object.values(colorsCountObj)) //3
+                let maxColor = Object.keys(colorsCountObj).find(key => colorsCountObj[key] === maxcolorsDuplicatedCount) // red
+                if(maxColor === 'black') maxColor = 'blue'
+                console.log('%c cards count','color:green' , maxColor)
+                let choosenColor = maxColor  
                 this.colorsPlaceholder.forEach(color =>{
                     color.style.cursor = 'auto'
                     color.onclick = null

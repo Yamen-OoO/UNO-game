@@ -1,3 +1,4 @@
+import { Speack } from "./audios.js";
 import { GameCurrentState } from "./game.js";
 
 
@@ -79,6 +80,7 @@ export function activePlayerToPlay() {
             if (result === false) {
                 console.log('%c nooo i dont have a blocker', 'color:red')
                 let ACCCCCC = GameCurrentState.Acc
+                Speack('NoBlocker')
                 await this.addCards(ACCCCCC)
                 this.updateCardsNumberElement()
                 if (this.cardsArray.length > 2) {
@@ -115,6 +117,7 @@ export function activePlayerToPlay() {
                         // })
                         card.onclick = () => {
                             this.checkCardCondition(cardElementIndex, res)
+                            Speack('Blocker')
                         }
                     }
                     else {
@@ -144,6 +147,7 @@ export function acivePlayerCards(res) {
         console.log('%c the card Array ', 'color:red', this.cardsArray)
         card.onclick = () => {
             this.checkCardCondition(i, res)
+
         }
     })
 
@@ -226,6 +230,9 @@ export async function checkCardCondition(cardIndex, res) {
             let clickedCardValue = this.cardsArray[cardIndex].value
             console.log('%c clicked card is  ', 'backgroundColor : red', clickedCardColor, clickedCardValue)
             if (clickedCardColor === GameCurrentState.CurrentCard.color || clickedCardValue === GameCurrentState.CurrentCard.value || clickedCardColor === 'black') {
+                // if(this.cardsArray.length!==3){
+                //     // Speack('Normal')
+                // }
                 this.haveABlocker = false
                 this.disActivePlayerToPlay()
                 console.log(this.cardsArray)

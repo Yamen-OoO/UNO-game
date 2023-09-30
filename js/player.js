@@ -2,7 +2,7 @@ import { hidePlayerCards, showPlayerCards } from "./amimations.js"
 import { generatePlayerProfile } from "./profile.js"
 import { GoDownAnimation, apendCards, fixLeftMargin, generatePlayerCards } from "./cards.js"
 import { GameCurrentState } from "./game.js"
-import { Speack, cardAudio } from "./audios.js"
+import { Speack, cardAudio, playMusic } from "./audios.js"
 import * as ComputerMethodes from './computer.js'
 import * as UserMehtodes from './user.js'
 export let playersArray = []
@@ -40,19 +40,23 @@ export class Player {
         if (newCardValue === 'R') {
             console.log('Revverssee')
             GameCurrentState.ChangeGCSRotation()
+            Speack("R")
         }
         else if (newCardValue === "P4") {
             console.log('Acc + 4')
             GameCurrentState.IncreaseGCSACC(4)
             await GameCurrentState.showColorsPlaceholder('P4', '', this.index)
+            Speack("P4")
         }
         else if (newCardValue === "P2") {
             console.log('Acc + 2')
             GameCurrentState.IncreaseGCSACC(2)
+            Speack("P2")
         }
         else if (newCardValue === "S") {
             //~ UpdagtePlayerTrun after i check the wining state in chekckPlayerStateWining (game.js)
             console.log('Stop the next player')
+            Speack("S")
         }
         else if (newCardValue === 'colors') {
             console.log('change colorrrr')
@@ -119,6 +123,10 @@ export class Player {
         if (this.cardsArray.length === 3 && this.aleratedUno === false) {
             console.log(this.cardsArray.length, 'cards leftttttttttttttttttttttttttttttttttttttt before thrwing')
             this.aleratedUno = true
+            if(GameCurrentState.playerTurn === 0){
+                playMusic("wining")
+            }
+            Speack('uno')
             console.log('unoooooooooooooooooooooooooooooooooooooooooooooooo')
             this.cardsContainerElement.classList.add('wining-base-shadow')
             this.cardsContainerElement.style.backgroundColor = 'gold'
@@ -133,6 +141,9 @@ export class Player {
         else if (this.cardsArray.length > 2 && this.aleratedUno === true) {
             console.log(this.cardsArray.length, 'cards leftttttttttttttttttttttttttttt')
             this.aleratedUno = false
+            if(GameCurrentState.playerTurn === 0){
+                playMusic("game")
+            }
             this.cardsContainerElement.classList.remove('wining-base-shadow')
             this.cardsContainerElement.style.backgroundColor = 'blue'
             this.cardsNumberElement.style.backgroundColor = 'blue'

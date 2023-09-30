@@ -28,6 +28,7 @@ body {
     left: 0;
     top: 0;
     background-image: url(/imgs/backgroundimgs/LoadingScreen.gif);
+    background-color: red;
     background-position: center;
     background-size: cover;
     z-index: 100000;

@@ -578,6 +578,7 @@
 }
 .result-placeholer ul li{
     width: 100px;
+    position: relative;
     font-size: 2.5rem;
     text-align: left;
     font-weight: bold;
@@ -585,7 +586,30 @@
     text-transform: capitalize;
     color: red;
     -webkit-text-stroke: 2px white;
+    text-transform: capitalize;
 }
+.result-placeholer ul li::before{
+    position: absolute;
+    left: -30px;
+    bottom: 0px;
+}
+.result-placeholer ul li:first-child:before{
+    content: '1';
+    color: gold;
+}
+.result-placeholer ul li:nth-child(2)::before{
+    content: '2';
+    color: #aaa;
+}
+.result-placeholer ul li:nth-child(3)::before{
+    content: '3';
+    color: orangered;
+}
+.result-placeholer ul li:last-child::before{
+    content: '4';
+    color: orangered;
+}
+
 .result-placeholer button{
     padding: 15px;
     background-color: black;

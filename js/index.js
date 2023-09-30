@@ -8,6 +8,7 @@ let loadingPage = document.querySelector(".loading-page")
 
 window.onload = function () {
     engine()
+
 }
 
 
@@ -40,9 +41,9 @@ function EngineRunTheGame() {
 function EngineShowMenu() {
 
     //& show the menu page
+    playMusic('menu')
     menuPage.style.display = 'flex'
     gamePage.style.display = 'none'
-    // playMusic('Menu')
     resSetSettingsObj()
     resetMenuOptions()
     //^ delete all the data of the players , cards 
@@ -54,7 +55,7 @@ function loadingScreen() {
         setTimeout(() => {
             loadingPage.style.display = 'none'
             res()
-        }, 1000);
+        }, 4000);
     })
 }
 
@@ -69,6 +70,7 @@ async function engine() {
         EngineRunTheGame()
     } else {
         await loadingScreen()
+
         EngineShowMenu()
     }
     console.log(settings)

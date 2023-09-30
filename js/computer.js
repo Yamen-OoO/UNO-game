@@ -1,5 +1,6 @@
 import { playersArray } from "./player.js";
 import { GameCurrentState } from "./game.js";
+import { Speack } from "./audios.js";
 
 
 
@@ -25,12 +26,14 @@ export async function think() {
             let increasingValue = result.increasingValue
             this.updatePlayerBase()
             await this.thorwACard(cardIndex)
+            Speack('Blocker')
             this.updateCardsNumberElement()
             await this.checkTheCardEffect()
             console.log('the New ACC is ', GameCurrentState.Acc)
         }
         else {
             let ACCCCCC = GameCurrentState.Acc
+            Speack('NoBlocker')
             await this.addCards(ACCCCCC)
             this.updateCardsNumberElement()
             this.updatePlayerBase()
@@ -47,6 +50,9 @@ export async function think() {
         if (choosenCardIndex !== false) {
             console.log('have a card')
             this.updatePlayerBase()
+            // if(this.cardsArray.length !==3){
+            //     Speack('Normal')
+            // }
             await this.thorwACard(choosenCardIndex)
             this.updateCardsNumberElement()
             await this.checkTheCardEffect()
@@ -84,7 +90,7 @@ export function active() {
             }
             this.startTimer()
             res()
-        }, 2000);
+        }, 1000);
     })
 }
 export function disActive() {
@@ -99,7 +105,7 @@ export function disActive() {
             }
             console.info(this.aleratedUno)
             res()
-        }, 2000);
+        }, 1000);
     })
 }
 export function startTimer() {
