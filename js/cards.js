@@ -42,7 +42,7 @@ export function generatePlayerCards(cardContainerIndex) {
         for (let i = 0; i <= 6; i++) {
             //^ [1-9 , S , P , R] uno card
             dynamicType = Math.floor(Math.random() * 15)
-            if (dynamicType > 2) {
+            if (dynamicType > 1) {
                 dynamicColor = cardColors[Math.floor(Math.random() * cardColors.length)]
                 dynamicValue = cardValues[Math.floor(Math.random() * cardValues.length)]
                 cardsArray.push(new Card(dynamicColor, dynamicValue, `/imgs/unocards/${dynamicColor}${dynamicValue}-min.jpg`))
@@ -141,7 +141,7 @@ function generateDynamicCards(playerCardsArray, cardsNumber, cardContainerIndex)
         for (let i = 1; i <= cardsNumber; i++) {
             let card = { color: null, value: null, img: null }
             dynamicType = Math.floor(Math.random() * 15)
-            if (dynamicType > 2) {
+            if (dynamicType > 1) {
                 card.color = cardColors[Math.floor(Math.random() * cardColors.length)]
                 card.value = cardValues[Math.floor(Math.random() * cardValues.length)]
                 card.img = `/imgs/unocards/${card.color}${card.value}-min.jpg`

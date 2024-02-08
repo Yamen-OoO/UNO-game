@@ -45,7 +45,7 @@ export function Speack(typeee) {
 //~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~``
 
 let cardObj = new Audio()
-cardObj.volume = .3
+cardObj.volume = .1
 
 export function cardAudio(movment) {
     cardObj.src = `/audio/other/${movment}.mp3`
@@ -72,7 +72,7 @@ export function muteGameAudios() {
 }
 export function unMuteGameAudios() {
     bakcgroundMusic.volume = .1
-    cardObj.volume = .3
+    cardObj.volume = .1
     speackingObj.volume = .5
 }
 

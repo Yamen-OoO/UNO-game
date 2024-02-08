@@ -164,6 +164,8 @@ export function activeBankCard(res) {
         this.checkToActiveUnoButton()
         this.updatePlayerBase()
         this.acivePlayerCards(res)
+        console.log('%c the new added card ' ,'color:gold' ,  this.cardsArray[this.cardsArray.length - 1])
+        if(this.cardsArray[this.cardsArray.length - 1].color !== GameCurrentState.CurrentCard.color && this.cardsArray[this.cardsArray.length-1].value !== GameCurrentState.CurrentCard.value) res()
     }
 }
 
